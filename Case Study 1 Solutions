@@ -1,0 +1,81 @@
+use mini_crm;
+
+-- 1. Retrieve all customer names and their email addresses.
+SELECT full_name, email 
+ FROM customers;
+
+-- 2. Get a list of products with aliases: product_name as Item and price as Cost.
+SELECT product_name as Item, price as Cost 
+FROM Products;
+
+-- 3. Find all products in the 'Beverages' category.
+SELECT * FROM products 
+WHERE category = 'Beverages';
+
+-- 4. Show all products that cost more than $5.
+SELECT * FROM products 
+WHERE price >5;
+
+
+-- 5. Retrieve all orders with total amount greater than or equal to $10.
+SELECT * FROM orders
+WHERE total_amount  >= 10;
+
+-- 6. Are there any customers without phone numbers?
+SELECT * FROM customers
+WHERE phone is NULL;
+
+-- 7. Find all products priced between $3 and $6.
+SELECT * FROM products
+WHERE price BETWEEN 3 AND 6;
+
+-- 8. Find products named 'French Fries', 'Veg Burger', or 'Margherita Pizza'.
+SELECT * FROM products
+WHERE product_name IN ('French Fries', 'Veg Burger','Margherita Pizza');
+
+-- 9. Find customers whose name starts with ‘A’.
+SELECT * FROM customers
+WHERE full_name LIKE 'A%';
+
+-- 10. List all customers who have placed at least one order.
+SELECT * FROM customers
+WHERE customer_id in (SELECT cust_id FROM orders);
+
+-- 11. Find all orders that are not in 'Delivered' status.
+SELECT * FROM orders
+WHERE status !='Delivered';
+
+-- 12. Show products that are not priced between $4 and $6.
+SELECT * FROM products
+WHERE price NOT BETWEEN 4 AND 6;
+
+-- 13. List products not in 'Main Course', 'Snacks', or 'Beverages' categories.
+SELECT * FROM products
+where category not in ('Main Course', 'Snacks','Beverages');
+
+-- 14. Find customers whose names don’t start with ‘S’.
+SELECT * FROM customers
+WHERE full_name NOT LIKE 'S%';
+
+-- 15. Find 'total_price' for each order item
+SELECT order_item_id, (unit_price * quantity)  AS total_price
+FROM order_items;
+
+-- 16. List the top 10 most expensive products, sorted descending by price.
+SELECT * FROM products
+ORDER BY price DESC
+LIMIT 10;
+
+-- 17. Show customers sorted alphabetically by name.
+SELECT full_name FROM customers
+ORDER BY full_name;
+
+-- 18. Show the 5 most recent customers based on 'created_at'.
+SELECT * FROM customers
+ORDER BY created_at desc;
+
+-- 19. Display any 3 random products.
+
+SELECT * FROM products
+ORDER BY RAND();
+
