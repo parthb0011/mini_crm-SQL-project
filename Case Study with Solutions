@@ -159,4 +159,58 @@ WHERE product_name LIKE '%Burger%';
 -- 15. Display total number of characters in each product name.
 SELECT product_name,LENGTH(product_name) FROM products;
 
+*CASE STUDY 3*
+
+-- Aggregate Function Questions
+-- Only use GROUP BY, COUNT, SUM, AVG, MIN, MAX
+-- Tables: orders, products, order_items
+
+-- Q1. Find the total number of orders for each status.
+SELECT status, COUNT(status) FROM orders
+GROUP BY status;
+
+-- Q2. What is the average order value for each order status?
+SELECT status, AVG(total_amount) AS AVG_VALUE FROM orders
+GROUP BY status;
+
+-- Q3. Find the total revenue generated on each order date.
+SELECT order_date, SUM(total_amount) FROM orders
+GROUP BY order_date
+ORDER BY order_date;
+
+-- Q4. What is the highest, lowest, and average order amount across all orders?
+SELECT
+MAX(total_amount),
+MIN(total_amount),
+AVG(total_amount)
+FROM orders;
+
+-- Q5. How many products are available in each category?
+SELECT category, COUNT(product_id) FROM products
+GROUP BY category;
+
+
+-- Q6. What is the average price of products in each category?
+SELECT category, AVG(price) FROM products
+GROUP BY category;
+
+-- Q7. Find the highest and lowest price among all products.
+SELECT 
+MAX(price),
+MIN(price)
+FROM products;
+-- Q8. How many units of each product_id were sold (based on order_items)?
+select pro_id,COUNT(pro_id) FROM order_items
+GROUP BY pro_id;
+
+-- Q9. What is the average unit price for each product_id in order_items?
+SELECT pro_id, AVG(unit_price) FROM order_items
+GROUP BY pro_id;
+
+-- Q10. How many times was each product_id ordered (count of appearances in order_items)?
+
+
+SELECT pro_id, COUNT(*) FROM order_items
+GROUP BY pro_id;
+
 
