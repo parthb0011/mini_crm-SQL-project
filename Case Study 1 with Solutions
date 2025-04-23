@@ -79,3 +79,84 @@ ORDER BY created_at desc;
 SELECT * FROM products
 ORDER BY RAND();
 
+
+
+*CASE STUDY 2*
+
+
+
+-- 1. Retrieve a list of all distinct product categories.
+SELECT DISTINCT category FROM products;
+
+-- 2. Show all product names in uppercase.
+SELECT product_name, UPPER(product_name) FROM products;
+
+
+-- 3. Select all customers who have not provided a phone number.
+SELECT * FROM customers
+WHERE phone  IS null;
+
+-- 4. Show the first 5 customers sorted alphabetically by name.
+SELECT * FROM customers
+ORDER BY full_name 
+LIMIT 5;
+
+
+-- 5. Show the 6th to 10th customers alphabetically.
+SELECT * FROM customers
+ORDER BY full_name 
+LIMIT 5
+OFFSET 5;
+
+-- 6. Show products with a price between $5 and $15.
+SELECT * FROM products
+WHERE price BETWEEN 5 AND 15;
+
+-- 7. List orders and label them as "High" if total_amount > $50, "Medium" if between $20-$50, and "Low" otherwise.
+SELECT order_id,
+CASE
+WHEN total_amount > 50 THEN 'HIGH'
+WHEN total_amount > 20 THEN 'Medium'
+ELSE 'Low'
+END AS order_cat
+from orders;
+
+-- 8. Display orders with total_amount NULL, and replace it with 0.
+SELECT order_id, COALESCE(total_amount, '0') 
+FROM orders;
+
+-- 9. Show full_name and the first word from their name only.
+SELECT full_name, substring_index(full_name,' ',1) 
+FROM customers;
+
+-- 10. Show all orders placed today (assume CURRENT_DATE).
+SELECT * FROM orders 
+WHERE DATE(order_date) = CURRENT_DATE;
+
+
+-- 11. List orders sorted by priority: Delivered > Confirmed > Shipped > Pending.
+SELECT * FROM orders
+ORDER BY
+CASE status
+WHEN 'Delivered' then 1
+WHEN 'Confirmed' then 2
+WHEN 'Packed' then 3
+WHEN 'Pending' then 4
+ELSE 5
+END;
+
+-- 12. Show current date, and how many days ago each order was placed.
+SELECT order_id, CURRENT_DATE() , CURRENT_DATE()-DATE(order_date) AS DAYS_AGO FROM orders; 
+
+-- 13. Show a list of customers with NULL phone numbers labeled as 'Missing'.
+SELECT customer_id, COALESCE(phone,'Missing') FROM customers
+WHERE phone IS null;
+
+-- 14. List products whose name contains the word 'BURGER'.
+SELECT * FROM products
+WHERE product_name LIKE '%Burger%';
+
+-- 15. Display total number of characters in each product name.
+SELECT product_name,LENGTH(product_name) FROM products;
+
+
